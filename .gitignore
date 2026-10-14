@@ -1,0 +1,8 @@
+.DS_Store
+.idea/
+.vscode/
+**/build/
+**/.dart_tool/
+**/target/
+**/node_modules/
+backend/src/main/resources/application-local.properties
