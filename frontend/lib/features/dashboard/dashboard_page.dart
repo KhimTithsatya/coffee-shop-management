@@ -40,7 +40,8 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   List<Product> get _filteredProducts => _products
-      .where((p) => p.name.toLowerCase().contains(_search.toLowerCase()) ||
+      .where((p) =>
+          p.name.toLowerCase().contains(_search.toLowerCase()) ||
           p.category.toLowerCase().contains(_search.toLowerCase()))
       .toList();
 
@@ -48,7 +49,7 @@ class _DashboardPageState extends State<DashboardPage> {
     final formKey = GlobalKey<FormState>();
     final nameController = TextEditingController(text: product?.name ?? '');
     final categoryController =
-        TextEditingController(text: product?.category ?? 'Coffee');
+        TextEditingController(text: product?.category ?? '');
     final priceController =
         TextEditingController(text: product?.price.toStringAsFixed(2) ?? '');
     final editing = product != null;
@@ -85,7 +86,8 @@ class _DashboardPageState extends State<DashboardPage> {
                   decoration: const InputDecoration(labelText: 'Price (៛)'),
                   validator: (v) {
                     final value = double.tryParse(v ?? '');
-                    if (value == null || value <= 0) return 'Enter a price above 0';
+                    if (value == null || value <= 0)
+                      return 'Enter a price above 0';
                     return null;
                   },
                 ),
@@ -184,20 +186,25 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
             destinations: const [
               NavigationRailDestination(
-                  icon: Icon(Icons.dashboard_outlined), label: Text('Dashboard')),
+                  icon: Icon(Icons.dashboard_outlined),
+                  label: Text('Dashboard')),
               NavigationRailDestination(
-                  icon: Icon(Icons.local_cafe_outlined), label: Text('Products')),
+                  icon: Icon(Icons.local_cafe_outlined),
+                  label: Text('Products')),
               NavigationRailDestination(
                   icon: Icon(Icons.point_of_sale), label: Text('POS')),
               NavigationRailDestination(
-                  icon: Icon(Icons.inventory_2_outlined), label: Text('Inventory')),
+                  icon: Icon(Icons.inventory_2_outlined),
+                  label: Text('Inventory')),
               NavigationRailDestination(
                   icon: Icon(Icons.bar_chart), label: Text('Reports')),
             ],
             onDestinationSelected: (index) {
               if (index != 1) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('This module will be added in the next development step.')),
+                  const SnackBar(
+                      content: Text(
+                          'This module will be added in the next development step.')),
                 );
               }
             },
@@ -215,13 +222,19 @@ class _DashboardPageState extends State<DashboardPage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Coffee Shop Manager',
-                                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                              Text('KD Coffee Shop Manager',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium
+                                      ?.copyWith(
                                         fontWeight: FontWeight.bold,
                                       )),
                               const SizedBox(height: 4),
                               Text('Manage your menu and product prices',
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
                                         color: Colors.black54,
                                       )),
                             ],
@@ -281,7 +294,8 @@ class _DashboardPageState extends State<DashboardPage> {
                                         children: [
                                           const Icon(Icons.cloud_off, size: 42),
                                           const SizedBox(height: 12),
-                                          Text(_error!, textAlign: TextAlign.center),
+                                          Text(_error!,
+                                              textAlign: TextAlign.center),
                                           const SizedBox(height: 12),
                                           FilledButton(
                                             onPressed: _loadProducts,
@@ -293,35 +307,48 @@ class _DashboardPageState extends State<DashboardPage> {
                                   )
                                 : products.isEmpty
                                     ? const Center(
-                                        child: Text('No products yet. Select “Add product” to get started.'),
+                                        child: Text(
+                                            'No products yet. Select “Add product” to get started.'),
                                       )
                                     : SingleChildScrollView(
                                         child: SizedBox(
                                           width: double.infinity,
                                           child: DataTable(
                                             columns: const [
-                                              DataColumn(label: Text('Product')),
-                                              DataColumn(label: Text('Category')),
+                                              DataColumn(
+                                                  label: Text('Product')),
+                                              DataColumn(
+                                                  label: Text('Category')),
                                               DataColumn(label: Text('Price')),
-                                              DataColumn(label: Text('Actions')),
+                                              DataColumn(
+                                                  label: Text('Actions')),
                                             ],
                                             rows: products.map((product) {
                                               return DataRow(cells: [
                                                 DataCell(Text(product.name)),
-                                                DataCell(Chip(label: Text(product.category))),
-                                                DataCell(Text('${product.price.toStringAsFixed(0)} ៛')),
+                                                DataCell(Chip(
+                                                    label: Text(
+                                                        product.category))),
+                                                DataCell(Text(
+                                                    '${product.price.toStringAsFixed(0)} ៛')),
                                                 DataCell(Row(
-                                                  mainAxisSize: MainAxisSize.min,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
                                                   children: [
                                                     IconButton(
                                                       tooltip: 'Edit',
-                                                      onPressed: () => _showProductDialog(product: product),
-                                                      icon: const Icon(Icons.edit_outlined),
+                                                      onPressed: () =>
+                                                          _showProductDialog(
+                                                              product: product),
+                                                      icon: const Icon(
+                                                          Icons.edit_outlined),
                                                     ),
                                                     IconButton(
                                                       tooltip: 'Deactivate',
-                                                      onPressed: () => _deactivate(product),
-                                                      icon: const Icon(Icons.delete_outline),
+                                                      onPressed: () =>
+                                                          _deactivate(product),
+                                                      icon: const Icon(
+                                                          Icons.delete_outline),
                                                     ),
                                                   ],
                                                 )),
@@ -366,7 +393,8 @@ class _SummaryCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(icon, size: 25, color: Theme.of(context).colorScheme.primary),
+              Icon(icon,
+                  size: 25, color: Theme.of(context).colorScheme.primary),
               const SizedBox(height: 14),
               Text(title, style: Theme.of(context).textTheme.bodyMedium),
               const SizedBox(height: 4),
